@@ -1,0 +1,10 @@
+<%= form_with(url: issue_book_to_user_path, method: :put, local: true) do |form| %>
+ <h1>Issued to</h1>
+  <div class="field">
+    <%= text_field_tag :issued_to %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
