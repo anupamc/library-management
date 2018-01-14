@@ -13,9 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
- #notice
- 	font-color: green;
-
- #warning
- 	font-color: green;

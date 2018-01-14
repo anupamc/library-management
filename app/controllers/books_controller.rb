@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-	before_action :set_book, only: [:show, :issue_book_to_user, :return_book]
+	before_action :set_book, only: [:issue_book_to_user, :return_book]
 
 	def index
 	  @books = Book.all
@@ -7,6 +7,9 @@ class BooksController < ApplicationController
 
 	def new
 	  @book = Book.new
+	end
+
+	def show
 	end
 
 	def create
@@ -23,12 +26,16 @@ class BooksController < ApplicationController
 	def issue_book_to_user
 	  issued_user = User.find_by_name(params[:issued_to])
 	  if issued_user
-	    if @book.update_attributes(user_id: issued_user.id, status: 'Issued')
-	      redirect_to books_path, flash: {notice: 'Book has been successfully issued.'}
-	    else
-	      flash[:error] = 'Something went wrong!'
-	      render 'issue_book'
-	    end
+	  	if issued_user.books.count < 3
+		    if @book.update_attributes(user_id: issued_user.id, status: 'Issued')
+		      redirect_to books_path, flash: {notice: 'Book has been successfully issued.'}
+		    else
+		      flash[:error] = 'Something went wrong!'
+		      render 'issue_book'
+		    end
+		  else
+		  	redirect_to books_path, flash: {error: 'This user has max no of books allowed(3)!'}
+		  end
 	  else
 	    flash[:error] = 'No user found!'
 	    render 'issue_book'
@@ -37,12 +44,24 @@ class BooksController < ApplicationController
 
 	def return_book
 	  if @book.update_attributes(user_id: nil, status: 'Available')
-	    flash[:notice] = 'Book has successfully been returned.'
-	    redirect_to books_url
+	    redirect_to books_url, flash: {notice: 'Book has successfully been returned.'}
 	  else
 	    flash[:error] = 'Something went wrong!'
 	    redirect_to books_url
 	  end
+	end
+
+	def search_book;	end
+
+	def search_book_result
+		@book = Book.fetch_book(params[:title], params[:author]).first
+		if @book
+			flash[:notice] = 'Book found!'
+			redirect_to book_url(@book)
+		else
+			flash[:error] = 'No book found!'
+			render :search_book
+		end
 	end
 
 	private
