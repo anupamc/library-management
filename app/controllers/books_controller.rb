@@ -35,6 +35,16 @@ class BooksController < ApplicationController
 	  end
 	end
 
+	def return_book
+	  if @book.update_attributes(user_id: nil, status: 'Available')
+	    flash[:notice] = 'Book has successfully been returned.'
+	    redirect_to books_url
+	  else
+	    flash[:error] = 'Something went wrong!'
+	    redirect_to books_url
+	  end
+	end
+
 	private
 	  # Use callbacks to share common setup or constraints between actions.
 	  def set_book

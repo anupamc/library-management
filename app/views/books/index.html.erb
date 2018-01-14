@@ -16,8 +16,8 @@
         <td><%= book.title %></td>
         <td><%= book.author %></td>
         <td><%= book.status %></td>
-        <td><%= link_to 'Issue Book', issue_book_path(book) %></td>
-        <td><%#= link_to 'Return book', return_book_path(book), data: { confirm: 'Sure to return to library?' } %></td>
+        <td><%= link_to_if book_available?(book), 'Issue Book', issue_book_path(book) %></td>
+        <td><%= link_to_if book_issued?(book), 'Return book', return_book_path(book), data: { confirm: 'Sure to return to library?' } %></td>
       </tr>
     <% end %>
   </tbody>
