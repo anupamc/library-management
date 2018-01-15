@@ -10,6 +10,7 @@ class BooksController < ApplicationController
 	end
 
 	def show
+		@book = Book.find(params[:id])
 	end
 
 	def create
@@ -56,8 +57,7 @@ class BooksController < ApplicationController
 	def search_book_result
 		@book = Book.fetch_book(params[:title], params[:author]).first
 		if @book
-			flash[:notice] = 'Book found!'
-			redirect_to book_url(@book)
+			redirect_to book_path(@book, id: @book.id), flash: {notice: 'Book found!'}
 		else
 			flash[:error] = 'No book found!'
 			render :search_book
@@ -65,14 +65,14 @@ class BooksController < ApplicationController
 	end
 
 	private
-	  # Use callbacks to share common setup or constraints between actions.
-	  def set_book
-	    @book = Book.find(params[:id])
-	  end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
 
-	  # Never trust parameters from the scary internet, only allow the white list through.
-	  def book_params
-	    params.require(:book).permit(:title, :author, :status)
-	  end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_params
+    params.require(:book).permit(:title, :author, :status)
+  end
 
 end

@@ -1,0 +1,12 @@
+<h1>Search User</h1>
+
+<%= form_with(url: search_user_result_path, method: :get, local: true) do |form| %>
+  <div class="field">
+  	<p>Name</p>
+    <%= text_field_tag :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Search' %>
+  </div>
+<% end %>

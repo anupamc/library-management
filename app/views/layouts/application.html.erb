@@ -23,7 +23,7 @@
      <li class='<%= current_class?(books_path) %>'><a href='<%= books_path %>'><span>Manage Books</span></a></li>
      <li class='<%= current_class?(new_user_path) %>'><a href='<%= users_path %>'><span>Manage Users</span></a></li>
      <li class='<%= current_class?(search_book_path) %>'><a href='<%= search_book_path %>'><span>Search Book</span></a></li>
-     <li class='last'><a href='#'><span>Search Users</span></a></li>
+     <li class='<%= current_class?(search_user_path) %> last'><a href='<%= search_user_path %>'><span>Search User</span></a></li>
   </ul>
   </div>
    <% if flash[:notice] %>

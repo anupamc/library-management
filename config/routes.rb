@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get 'books/:id/return_book' => 'books#return_book', as: :return_book
   get 'search_book' => 'books#search_book', as: :search_book
   get 'search_book_result' => 'books#search_book_result'
+  get 'search_user' => 'users#search_user', as: :search_user
+  get 'search_user_result' => 'users#search_user_result'
 end

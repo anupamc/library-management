@@ -9,6 +9,10 @@ class UsersController < ApplicationController
 	  @user = User.new
 	end
 
+	def show
+		@user = User.find(params[:id])
+	end
+
 	def create
 	  @user = User.new(user_params)
 	  if @user.save
@@ -16,6 +20,20 @@ class UsersController < ApplicationController
 	  else
 	  	render :new
 	  end
+	end
+
+  def search_user
+
+  end
+
+  def search_user_result
+		@user = User.find_by_name(params[:name])
+		if @user
+			redirect_to user_path(@user, id: @user.id), flash: {notice: 'User found!'}
+		else
+			flash[:error] = 'No user found!'
+			render :search_user
+		end
 	end
 
 	private
